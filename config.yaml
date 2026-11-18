@@ -1,0 +1,63 @@
+# پیکربندی دستیار صوتی «آوا»  —  همه‌چیز لوکال، بدون کلید API
+
+language: fa
+terminal_reshape: true   # فارسی را برای کنسول ویندوز راست‌به‌چپ می‌کند؛ اگر ترمینالت مدرن است false کن
+
+# نحوه‌ی شروع مکالمه:
+#   push_to_talk = کلید Enter را بزن، بعد حرف بزن  (روی میکروفون‌های کم‌کیفیت بسیار مطمئن‌تر)
+#   wake         = با گفتن «آوا» فعال شود  (به میکروفون خوب نیاز دارد)
+interaction: push_to_talk
+debug: false              # true = چاپ اطلاعات ضبط/رونویسی + ذخیره‌ی debug_turn.wav
+
+wake:
+  # عبارت‌های بیدارباش (با/بدون اعراب و با املای مختلف)
+  words: ["آوا", "اوا", "آبا", "اووا", "او وا", "ava", "آ وا", "هی آوا"]
+  model: base            # برای تشخیص یک کلمه کافی است و در حلقه از small سریع‌تر
+  window_seconds: 2.0    # طول پنجره‌ی صوتی که هر بار بررسی می‌شود
+  hop_seconds: 1.0       # فاصله‌ی بین بررسی‌ها
+  rms_gate: 1200         # فقط صدای واقعی و بلند بررسی شود؛ صدای زمینه و پژواک بلندگو رد شود
+  debug: true            # هر بررسی را چاپ می‌کند تا ببینی چه می‌شنود؛ وقتی کار کرد false کن
+
+stt:
+  model: small           # base برای فارسی خیلی ضعیف است؛ small دقت قابل‌قبول دارد (روی این CPU چند ثانیه طول می‌کشد)
+  device: cpu            # auto | cpu | cuda  (MX150 با ۲ گیگ حافظه برای ویسپر مطمئن نیست)
+  compute_type: int8
+
+tts:
+  # فایل صدای فارسی Piper — با اجرای  python -m scripts.download_models  دانلود می‌شود
+  model_path: models/piper/fa_IR-amir-medium.onnx
+  length_scale: 1.05     # >۱ کندتر و شمرده‌تر، <۱ سریع‌تر
+  robot: false           # لحن رباتیک؛ false یعنی صدای طبیعیِ Piper
+  robot_carrier_hz: 26
+  robot_mix: 0.12
+  robot_bits: 8
+  sound_effects: true    # بلیپ‌های کوتاهِ «گوش می‌دهم / پردازش / نفهمیدم»
+
+llm:
+  host: http://localhost:11434
+  model: qwen2.5:7b      # کیفیت فارسیِ ۳b ضعیف بود؛ ۷b روان‌تر است (روی این CPU کندتر، ولی جواب‌ها کوتاه‌اند)
+  temperature: 0.5
+  num_ctx: 3072
+  num_predict: 140       # سقف طول پاسخ — هم برای گفتار مناسب‌تر، هم سریع‌تر
+  history_turns: 4       # چند دور آخر گفتگو در حافظه‌ی کوتاه‌مدت نگه داشته شود
+  timeout: 600           # مهلت پاسخ مدل (ثانیه) — بار اول که مدل در حافظه بار می‌شود کند است
+  keep_alive: 30m        # مدل چقدر در حافظه بماند تا پاسخ بعدی سریع باشد
+
+websearch:
+  enabled: true
+  max_results: 5
+  region: wt-wt
+
+memory:
+  path: memory/ava_memory.json
+
+audio:
+  sample_rate: 16000
+  input_device: null     # شماره یا نام دستگاه؛ null یعنی پیش‌فرض سیستم
+  output_device: null
+  input_gain: 1.7        # تقویت نرم‌افزاری میکروفون (پیشنهاد check_audio روی این سیستم)
+
+vad:
+  aggressiveness: 1      # 0 تا 3 — هرچه بیشتر، سخت‌گیرتر در تشخیص گفتار
+  silence_ms: 800        # این مدت سکوت یعنی «حرف کاربر تمام شد»
+  max_utterance_seconds: 20
