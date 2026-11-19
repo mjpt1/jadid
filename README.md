@@ -1,3 +1,35 @@
+<!-- gen:header -->
+<p align="center"><img src=".github/cover.svg" alt="Ava · آوا" width="100%"></p>
+
+<h1 align="center">Ava · آوا</h1>
+<p align="center"><b>دستیار صوتی فارسی، کاملاً آفلاین و بدون کلید API</b><br><i>Fully local Persian voice assistant — no API keys</i></p>
+<p align="center"><img alt="Python" src="https://img.shields.io/badge/-Python-06b6d4?style=for-the-badge"> <img alt="faster-whisper" src="https://img.shields.io/badge/-faster--whisper-06b6d4?style=for-the-badge"> <img alt="Ollama" src="https://img.shields.io/badge/-Ollama-06b6d4?style=for-the-badge"> <img alt="Piper TTS" src="https://img.shields.io/badge/-Piper%20TTS-06b6d4?style=for-the-badge"></p>
+
+<div dir="rtl">
+
+## ✨ امکانات
+
+- بیدار شدن با گفتن «آوا»
+- تشخیص گفتار فارسی آفلاین
+- مغز زبانی محلی با Ollama
+- صدای فارسی طبیعی با Piper
+- حافظه‌ی مکالمه
+
+</div>
+
+## 🚀 Quick start
+
+```bash
+pip install -r requirements.txt
+python main.py          # voice
+python main.py --text   # text mode
+```
+
+---
+
+<!-- gen:docs -->
+## 📚 مستندات کامل · Full documentation
+
 # آوا — دستیار صوتی فارسی، کاملاً لوکال
 
 یک دستیار صوتی که همه‌ی اجزایش روی دستگاه خودت اجرا می‌شود و به هیچ کلید API نیازی ندارد:
@@ -89,3 +121,8 @@ scripts/download_models.py  دانلود مدل‌ها
 - بدون «قطع‌کردن وسط حرف» (barge-in)؛ تا وقتی آوا حرف می‌زند گوش نمی‌دهد.
 - پاسخ به‌صورت یکجا ساخته و بعد خوانده می‌شود؛ می‌توان جمله‌به‌جمله استریم کرد.
 - تشخیص بیدارباش مبتنی بر ویسپر است؛ برای دقت بیشتر می‌توان از `openWakeWord` استفاده کرد.
+
+---
+
+<p align="center">ساخته‌شده توسط <a href="https://mahsen81.ir"><b>محسن جباره‌اصل</b></a> — برنامه‌نویسی، طراحی سایت، ربات و هوش مصنوعی<br>
+Built by <a href="https://mahsen81.ir">Mohsen Jabbareh-Asl</a> · ⭐ اگر مفید بود، ستاره بدهید · Need a custom version? <a href="https://mahsen81.ir">Get in touch</a></p>
